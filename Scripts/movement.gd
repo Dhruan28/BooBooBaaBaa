@@ -9,10 +9,12 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 func player_movement(delta):
 	if Input.is_action_pressed("ui_up"):
+		playerAnim(1)
 		curDir = "up"
 		velocity.x = 0
 		velocity.y = -SPEED
 	elif Input.is_action_pressed("ui_down"):
+		playerAnim(1)
 		curDir = "down"
 		velocity.x = 0
 		velocity.y = SPEED
