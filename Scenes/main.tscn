@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://3mh77ohsnl1p"]
 
-[ext_resource type="Script" path="res://Scenes/movement.gd" id="1_m7qx3"]
+[ext_resource type="Script" path="res://Scripts/movement.gd" id="1_m7qx3"]
 [ext_resource type="Texture2D" uid="uid://cvsmpmgrkyfpk" path="res://Assets/players blue x2.png" id="2_1xn8j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t2dql"]
@@ -182,4 +182,10 @@ shape = SubResource("CircleShape2D_t2dql")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -18)
 sprite_frames = SubResource("SpriteFrames_v1ucj")
-animation = &"idle"
+animation = &"reload"
+frame = 4
+frame_progress = 0.832059
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
