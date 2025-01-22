@@ -1,10 +1,13 @@
 extends CharacterBody2D
 
-const SPEED = 200
+var SPEED = 200
 var curDir = "none"
 
 func _physics_process(delta):
 	player_movement(delta)
+	
+	if Input.is_action_just_pressed("dash"):
+		dash()
 
 	# Get the input direction and handle the movement/deceleration.
 func player_movement(delta):
@@ -51,3 +54,14 @@ func playerAnim(movement):
 			anim.play("run")
 		elif movement == 0:
 			anim.play("idle")
+			
+func dash():
+	SPEED = SPEED *3
+	$Timer.start()
+	
+	
+
+
+func _on_timer_timeout():
+	SPEED = 200
+	
