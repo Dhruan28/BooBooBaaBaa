@@ -9,5 +9,5 @@
 position = Vector2(299, 332)
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(410, 394)
+position = Vector2(537, 488)
 texture = ExtResource("2_88274")
