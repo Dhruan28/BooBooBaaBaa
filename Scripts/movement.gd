@@ -43,20 +43,23 @@ func player_movement(delta):
 func playerAnim(movement):
 	var dir = curDir
 	var anim = $AnimatedSprite2D
-	
+	var x = 0
 	if dir == "right":
-		anim.flip_h = false
-		if movement == 1:
-			anim.play("run")
-		elif movement == 0:
-			anim.play("idle")
-			
+		x = 0
 	if dir == "left":
 		anim.flip_h = true
-		if movement == 1:
+		x = 1
+	if movement != 0:
+		if x == 0:
+			anim.flip_h = false
 			anim.play("run")
-		elif movement == 0:
-			anim.play("idle")
+		if x == 1:
+			anim.flip_h = true
+			anim.play("run")
+	else:
+		anim.play("idle")
+			
+
 			
 func dash():
 	SPEED = SPEED *4
