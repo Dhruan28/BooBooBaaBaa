@@ -4,7 +4,7 @@ var SPEED = 200
 var curDir = "none"
 var dashUse = 2
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	player_movement(delta)
 	
 	if Input.is_action_just_pressed("dash") and dashUse > 0:
@@ -40,6 +40,7 @@ func player_movement(delta):
 		velocity.y = 0
 
 	move_and_slide()
+
 func playerAnim(movement):
 	var dir = curDir
 	var anim = $AnimatedSprite2D
