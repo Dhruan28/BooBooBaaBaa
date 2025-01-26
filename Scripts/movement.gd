@@ -1,8 +1,11 @@
 extends CharacterBody2D
 
-var SPEED = 200
+var speed = 200
 var curDir = "none"
+var lastDir = "right"
 var dashUse = 2
+var input = Vector2.ZERO
+
 
 func _physics_process(delta: float) -> void:
 	player_movement(delta)
@@ -10,64 +13,59 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and dashUse > 0:
 		dash()
 		dashUse = dashUse - 1
-		
 
-	# Get the input direction and handle the movement/deceleration.
+# Get the input direction and handle the movement/deceleration.
+func get_input():
+	input.x = int(Input.is_action_pressed("player_right")) - int(Input.is_action_pressed("player_left"))
+	input.y = int(Input.is_action_pressed("player_down")) - int(Input.is_action_pressed("player_up"))
+	return input.normalized()
+
+	
 func player_movement(delta):
-	if Input.is_action_pressed("ui_up"):
-		playerAnim(1)
-		curDir = "up"
-		velocity.x = 0
-		velocity.y = -SPEED
-	elif Input.is_action_pressed("ui_down"):
-		playerAnim(1)
-		curDir = "down"
-		velocity.x = 0
-		velocity.y = SPEED
-	elif Input.is_action_pressed("ui_right"):
-		playerAnim(1)
-		curDir = "right"
-		velocity.x = SPEED
-		velocity.y = 0
-	elif Input.is_action_pressed("ui_left"):
-		playerAnim(1)
-		curDir = "left"
-		velocity.x = -SPEED
-		velocity.y = 0
-	else:
+	input = get_input()
+	velocity = input * speed
+	
+	if velocity == Vector2.ZERO:
 		playerAnim(0)
-		velocity.x =0
-		velocity.y = 0
-
+	else:
+		if velocity.x > 0:
+			playerAnim(1)
+			curDir = "up"
+		elif velocity.x < 0:
+			playerAnim(1)
+			curDir = "down"
+		if velocity.x > 0:
+			playerAnim(1)
+			curDir = "right"
+			lastDir = "right"
+		elif velocity.x < 0:
+			playerAnim(1)
+			curDir = "left"
+			lastDir = "left"
+		
+	# makes the player move... DO NOT REMOVE
 	move_and_slide()
 
+
 func playerAnim(movement):
-	var dir = curDir
 	var anim = $AnimatedSprite2D
-	var x = 0
-	if dir == "right":
-		x = 0
-	if dir == "left":
-		anim.flip_h = true
-		x = 1
+
 	if movement != 0:
-		if x == 0:
+		if lastDir == "right":
 			anim.flip_h = false
 			anim.play("run")
-		if x == 1:
+		if lastDir == "left":
 			anim.flip_h = true
 			anim.play("run")
 	else:
 		anim.play("idle")
-			
 
-			
+# dash functionality
 func dash():
-	SPEED = SPEED *4
+	speed = speed *4
 	$Timer.start()
-	
-	
+
 
 func _on_timer_timeout():
-	SPEED = 200
+	speed = 200
 	
